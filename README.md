@@ -1,1 +1,2 @@
-# libcal
+# My Master Thesis (WIP)
+

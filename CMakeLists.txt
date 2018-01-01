@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.9)
-project(libcal)
+project(thesis)
 
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB LIBCAL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-file(GLOB LIBCAL_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+add_subdirectory(libcal)
+add_subdirectory(tpx2h5)
 
-add_library(cal SHARED ${LIBCAL_SOURCES} ${LIBCAL_HEADERS})
-include_directories(cal ${CMAKE_CURRENT_SOURCE_DIR}/include)
