@@ -10,8 +10,7 @@ std::tuple<hsize_t, hsize_t>
 read_length(const std::string& file)
 {
     std::ifstream input{file};
-    hsize_t frames = 1; // +1 to account for the last frame
-    hsize_t pixels = 0;
+    hsize_t frames = 0, pixels = 0;
     bool prev_empty = false;
 
     for (std::string line{}; std::getline(input, line); ) {
@@ -23,6 +22,11 @@ read_length(const std::string& file)
             ++pixels;
             prev_empty = false;
         }
+    }
+
+    if (!prev_empty) {
+        // +1 to account for the last frame delimiter
+        ++frames;
     }
 
     return std::make_tuple(frames, pixels);
@@ -145,6 +149,12 @@ convert_data(const std::string& in_path, const std::vector<calibration>& calib, 
             write_idx += BUFFER_SIZE;
             fill_idx = 0;
         }
+    }
+
+    if (!prev_empty) {
+        // Make sure the output ends with a frame delimiter.
+        buffer[fill_idx * 2 + 0] = buffer[fill_idx * 2 + 1] = -1.0;
+        ++fill_idx;
     }
 
     if (fill_idx > 0) {
