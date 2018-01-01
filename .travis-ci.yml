@@ -1,0 +1,4 @@
+language: cpp
+before_script: gcc -v && g++ -v && cmake --version
+script: mkdir build && cd build && cmake .. && make
+
