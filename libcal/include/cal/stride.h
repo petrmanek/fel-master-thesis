@@ -5,15 +5,22 @@
 #ifndef LIBCAL_STRIDE_H
 #define LIBCAL_STRIDE_H
 
-#include <cstdint>
+#include <tuple>
 #include <vector>
+#include <cal/primitives.h>
 
-using coord_t = uint16_t;
-using count_t = uint16_t;
-
+template<typename Value>
 struct stride {
-    std::vector<coord_t> coords;
-    std::vector<count_t> counts;
+    using value_type = Value;
+    using pixel_type = std::tuple<coord_t, value_type>;
+
+    stride() = default;
+    virtual ~stride() = default;
+
+    std::vector<pixel_type> pixels;
 };
+
+using count_stride = stride<count_t>;
+using kev_stride = stride<kev_t>;
 
 #endif //LIBCAL_STRIDE_H
