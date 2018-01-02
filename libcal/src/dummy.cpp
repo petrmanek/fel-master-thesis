@@ -2,6 +2,8 @@
 // Created by petr on 1.1.18.
 //
 
+#include <cal/cal.h>
+
 int
 hello(int x)
 {

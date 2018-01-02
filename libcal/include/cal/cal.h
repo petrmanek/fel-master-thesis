@@ -12,5 +12,6 @@
 #include <cal/primitives.h>
 #include <cal/stride.h>
 #include <cal/matrix.h>
+#include <cal/h5.h>
 
 #endif //LIBCAL_CAL_H

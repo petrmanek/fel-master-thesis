@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(libcal)
 add_subdirectory(tpx2h5)
-
+add_subdirectory(h52tpx)
