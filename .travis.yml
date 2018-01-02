@@ -1,4 +1,17 @@
 language: cpp
-before_script: gcc -v && g++ -v && cmake --version
-script: mkdir build && cd build && cmake .. && make
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libhdf5-dev libhdf5-cpp
+
+before_script:
+  - gcc -v
+  - g++ -v
+  - cmake --version
+
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
 
