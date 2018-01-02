@@ -2,7 +2,7 @@ language: cpp
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y libhdf5-dev libhdf5-cpp
+  - sudo apt-get install -y libhdf5-dev
 
 before_script:
   - gcc -v
