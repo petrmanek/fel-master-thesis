@@ -17,5 +17,8 @@
 #include <cal/h5.h>
 
 #include <cal/edge.h>
+#include <cal/ransac.h>
+
+#include <cal/measure.h>
 
 #endif //LIBCAL_CAL_H

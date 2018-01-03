@@ -9,26 +9,23 @@ int main(int argc, char *argv[])
         return 8;
     }
 
-    auto start = std::chrono::system_clock::now();
     std::size_t frame_count = 0;
+    auto ms = measure<std::chrono::milliseconds>([&]() {
+        h5source src{argv[1]};
+        auto data = src.next();
+        for (; data; data = src.next()) {
+            if (frame_count) {
+                std::cout << '#' << std::endl;
+            }
 
-    h5source src{argv[1]};
-    auto data = src.next();
-    for (; data; data = src.next()) {
-        if (frame_count) {
-            std::cout << '#' << std::endl;
+            for (const auto& pixel : data->pixels) {
+                const auto& [coord, kev] = pixel;
+                std::cout << coord << '\t' << kev << std::endl;
+            }
+
+            ++frame_count;
         }
-
-        for (const auto& pixel : data->pixels) {
-            const auto& [coord, kev] = pixel;
-            std::cout << coord << '\t' << kev << std::endl;
-        }
-
-        ++frame_count;
-    }
-
-    auto end = std::chrono::system_clock::now();
-    long ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    });
 
     std::cerr << "Time elapsed:   " << ms << " ms" << std::endl;
     std::cerr << "Frames read:    " << frame_count << std::endl;
