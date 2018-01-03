@@ -5,11 +5,14 @@
 #ifndef LIBCAL_EDGE_H
 #define LIBCAL_EDGE_H
 
-#include <cstdint>
+#include <cal/primitives.h>
 
 struct edge {
-    std::size_t start;
-    std::size_t end;
+    coord_t start;
+    coord_t end;
+
+    edge(coord_t s, coord_t e) :start{s}, end{e} { }
+
 };
 
 #endif //LIBCAL_EDGE_H

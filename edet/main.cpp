@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
             kev_frame frame{*data};
             frame.mat();
 
-            evaluate_detection<ransac<kev_t>>(frame);
+            evaluate_detection<greedy_ransac<kev_t>>(frame);
         }
 
         std::cout << std::endl;
