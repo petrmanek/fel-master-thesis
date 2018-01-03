@@ -15,19 +15,20 @@ class frame {
 public:
     using element_type = Element;
     using stride_type = stride<element_type>;
-    using matrix_type = matrix<element_type>;
+    using matrix_type = matrix<element_type, row_order>;
 
     frame(const stride_type& s) :stride_{s} {}
     virtual ~frame() = default;
 
-    const stride_type& stride() const
+    const stride_type& str() const
     {
         return stride_;
     }
 
-    const matrix_type& matrix()
+    const matrix_type& mat()
     {
         if (!matrix_) {
+            // Lazy conversion.
             matrix_ = std::make_optional(stride_);
         }
 
