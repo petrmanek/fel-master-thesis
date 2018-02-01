@@ -12,9 +12,13 @@ void evaluate_detection(const kev_frame& f)
         detector(f, std::back_inserter(edges));
     });
 
-    std::cout << "  - " << EdgeDetector::name << "\t " << edges.size() << "\t " << ms << " ms" << std::endl;
+    //std::cout << "  - " << EdgeDetector::name << "\t " << edges.size() << "\t " << ms << " ms" << std::endl;
 
     // TODO: evaluate some quality criterion
+
+    for (const auto& e : edges) {
+        std::cout << e.start << "\t " << e.end << std::endl;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -33,7 +37,8 @@ int main(int argc, char *argv[])
             kev_frame frame{*data};
             frame.mat();
 
-            evaluate_detection<greedy_ransac<kev_t>>(frame);
+            evaluate_detection<ransac<kev_t>>(frame);
+            std::cout << "#" << std::endl;
         }
 
         std::cout << std::endl;
