@@ -6,6 +6,7 @@
 #define LIBCAL_MATRIX_H
 
 #include <array>
+#include <tuple>
 #include <cal/primitives.h>
 #include <cal/stride.h>
 
@@ -15,6 +16,11 @@ struct row_order
     {
         return CHIP_DIM * i + j;
     }
+
+    std::tuple<coord_t, coord_t> inv(std::size_t c) const
+    {
+        return std::make_tuple((coord_t) (c / CHIP_DIM), (coord_t) (c % CHIP_DIM));
+    }
 };
 
 template<typename Element, typename StoragePolicy = row_order>
@@ -22,7 +28,9 @@ class matrix {
 public:
     using element_type = Element;
     using storage_type = std::array<element_type, CHIP_PIXELS>;
+
     using storage_policy_type = StoragePolicy;
+    static const storage_policy_type storage_policy;
 
     matrix() = default;
 
@@ -39,12 +47,12 @@ public:
 
     constexpr element_type& at(coord_t i, coord_t j)
     {
-        return data_[storage_policy_(i, j)];
+        return data_[storage_policy(i, j)];
     }
 
     constexpr const element_type& at(coord_t i, coord_t j) const
     {
-        return data_[storage_policy_(i, j)];
+        return data_[storage_policy(i, j)];
     }
 
     void fill(const element_type& value)
@@ -54,9 +62,11 @@ public:
 
 private:
     storage_type data_;
-    static const storage_policy_type storage_policy_;
 
 };
+
+template<typename Element, typename StoragePolicy>
+const StoragePolicy matrix<Element, StoragePolicy>::storage_policy{};
 
 using kev_matrix = matrix<kev_t>;
 using count_matrix = matrix<count_t>;
