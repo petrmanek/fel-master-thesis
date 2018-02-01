@@ -60,6 +60,20 @@ public:
         std::fill(data_.begin(), data_.end(), value);
     }
 
+    template<typename ForwardIterator>
+    void get_profile(ForwardIterator it, size_t n, coord_t i0, coord_t j0, coord_t i1, coord_t j1) const
+    {
+        double di = i1 - i0, dj = j1 - j0;
+        di /= (double) (n - 1);
+        dj /= (double) (n - 1);
+
+        for (size_t k = 0; k < n; ++k) {
+            double i = i0 + di * k;
+            double j = j0 + dj * k;
+            *it++ = at((coord_t) i, (coord_t) j);
+        }
+    }
+
 private:
     storage_type data_;
 
